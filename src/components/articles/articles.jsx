@@ -5,9 +5,9 @@ const Articles = ({ data }) => {
 				const { model, year, vin, make } = item;
 				return (
 					<div className="article" key={index}>
-						<h3>
+						<h6>
 							<a href="#">{model}</a>
-						</h3>
+						</h6>
 
 						<p>
 							{year}

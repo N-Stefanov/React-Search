@@ -1,6 +1,10 @@
-const ListProposal = ({ list, term }) => {
+const ListProposal = ({ list, term, proposalVisible }) => {
+	const className = proposalVisible
+		? "list-proposal list-proposal--is-open"
+		: "list-proposal";
+
 	return (
-		<ul className="list-proposal">
+		<ul className={className}>
 			{list
 				.filter(
 					({ model }) =>

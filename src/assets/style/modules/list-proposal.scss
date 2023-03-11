@@ -1,0 +1,22 @@
+.list-proposal {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	padding: 1rem 0;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity .2s ease;
+	z-index: 100;
+	list-style-type: none;
+	text-align: left;
+	font-size: 1.8rem;
+
+	li {
+		padding: 1rem;
+	}
+}
+
+.list-proposal--is-open {
+	opacity: 1;
+	pointer-events: all;
+}

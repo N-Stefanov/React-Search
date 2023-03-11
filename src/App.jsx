@@ -2785,33 +2785,63 @@ function App() {
 	const [options, setOptions] = useState(data);
 	const [term, setTerm] = useState("");
 	const [articlesData, setArticlesData] = useState("");
+	const [proposalVisible, setProposalVisible] = useState(false);
 
 	const handleSearch = (searchValue) => {
 		setTerm(searchValue);
 	};
 
 	const onSubmite = (term) => {
+		if (term.length === 0) {
+			setArticlesData([]);
+
+			return;
+		}
+
 		const filteredData = options.filter(
 			({ model }) => model.toLowerCase().indexOf(term.toLowerCase()) > -1
 		);
 
 		setArticlesData(filteredData);
+	};
 
-		console.log(options);
+	const handleOpenOptions = () => {
+		if (term.length === 0) {
+			setArticlesData([]);
 
-		console.log(filteredData);
+			return;
+		}
+
+		setProposalVisible(true);
+	};
+
+	const handleCloseOptions = () => {
+		setProposalVisible(false);
 	};
 
 	return (
 		<div className="App">
-			<Search
-				data={options}
-				handleSearch={handleSearch}
-				term={term}
-				onSubmite={onSubmite}
-			/>
+			<section className="section">
+				<div className="shell">
+					<header className="section__head">
+						<Search
+							data={options}
+							handleSearch={handleSearch}
+							term={term}
+							onSubmite={onSubmite}
+							proposalVisible={proposalVisible}
+							handleOpenOptions={handleOpenOptions}
+							handleCloseOptions={handleCloseOptions}
+						/>
+					</header>
 
-			{articlesData.length > 0 && <Articles data={articlesData} />}
+					{articlesData.length > 0 && (
+						<div className="section__body">
+							<Articles data={articlesData} />
+						</div>
+					)}
+				</div>
+			</section>
 		</div>
 	);
 }

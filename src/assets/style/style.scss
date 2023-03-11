@@ -6,5 +6,9 @@
 @import 'generic/base';
 
 /* ------------------------------------------------------------ *\
-	Components
+	Modules
 \* ------------------------------------------------------------ */
+@import 'modules/section';
+@import 'modules/search';
+@import 'modules/list-proposal';
+@import 'modules/article';
