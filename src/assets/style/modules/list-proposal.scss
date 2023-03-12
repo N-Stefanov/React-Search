@@ -28,6 +28,11 @@
 		background-color: transparent;
 		text-align: left;
 		padding: 1rem 5rem 1rem 1rem;
+		transition: background-color .3s ease;
+
+		&:hover {
+			background-color: rgba($color: #dddddd, $alpha: .5);
+		}
 
 		&:focus {
 			background-color: rgba($color: #dddddd, $alpha: 1.0);

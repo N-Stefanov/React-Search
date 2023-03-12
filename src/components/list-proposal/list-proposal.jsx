@@ -1,7 +1,5 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
-import xmarkSolid from "../../assets/images/xmark-solid.svg";
-import clockSolid from "../../assets/images/clock-solid.svg";
 
 const ListProposal = ({
 	list,
@@ -10,8 +8,6 @@ const ListProposal = ({
 	handleSearch,
 	handleCloseOptions,
 	handleSetTerm,
-	history,
-	clearHistory,
 }) => {
 	const initialState = { selectedIndex: 0 };
 
@@ -21,18 +17,6 @@ const ListProposal = ({
 				model.toLowerCase().startsWith(term.toLowerCase())
 			)
 			.slice(0, 10);
-	};
-
-	const checkHistory = () => {
-		const newData = filteredData().map((item) => {
-			if (history.length && history.includes(item.model)) {
-				return { ...item, isWanted: true };
-			} else {
-				return { ...item, isWanted: false };
-			}
-		});
-
-		return newData;
 	};
 
 	const reducer = (state, action) => {
@@ -109,26 +93,22 @@ const ListProposal = ({
 
 	return (
 		<ul className={className}>
-			{checkHistory().map((item, index) => {
-				const { model, isWanted } = item;
-				const elementClassName = isWanted
-					? "list__item is-visible"
-					: "list__item";
+			{filteredData().map((item, index) => {
 				return (
 					<li
 						key={index}
-						onClick={() => handleOnClick(model)}
-						className={elementClassName}
+						onClick={() => handleOnClick(item.model)}
+						className="list__item"
 					>
 						<button
-							onClick={() => handleOnClick(model, index)}
+							onClick={() => handleOnClick(item.model, index)}
 							className="list__button"
 							role="button"
 							aria-pressed={index === state.selectedIndex}
 							tabIndex={0}
 							onKeyDown={(e) => {
 								if (e.key === "Enter") {
-									handleOnClick(model, index);
+									handleOnClick(item.model, index);
 									e.target.blur();
 								}
 
@@ -142,26 +122,7 @@ const ListProposal = ({
 								}
 							}}
 						>
-							{model}
-						</button>
-
-						<button
-							className="list__button-close"
-							onClick={() => clearHistory(model)}
-						>
-							<img
-								src={clockSolid}
-								alt=""
-								width={10}
-								height={10}
-							/>
-
-							<img
-								src={xmarkSolid}
-								alt=""
-								width={10}
-								height={10}
-							/>
+							{item.model}
 						</button>
 					</li>
 				);
