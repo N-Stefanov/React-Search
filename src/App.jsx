@@ -2786,6 +2786,7 @@ function App() {
 	const [term, setTerm] = useState("");
 	const [articlesData, setArticlesData] = useState("");
 	const [proposalVisible, setProposalVisible] = useState(false);
+	const [history, setHistory] = useState([]);
 
 	const handleSearch = (searchValue) => {
 		setTerm(searchValue);
@@ -2794,7 +2795,6 @@ function App() {
 	const handleSetTerm = (term) => {
 		if (term.length === 0) {
 			setArticlesData([]);
-
 			return;
 		}
 
@@ -2803,6 +2803,14 @@ function App() {
 		);
 
 		setArticlesData(filteredData);
+
+		setHistory((prev) => {
+			if (prev.includes(term) || prev === "") {
+				return [...prev];
+			}
+
+			return [...prev, term];
+		});
 	};
 
 	const handleOpenOptions = () => {
@@ -2817,6 +2825,16 @@ function App() {
 
 	const handleCloseOptions = () => {
 		setProposalVisible(false);
+	};
+
+	const clearHistory = (name) => {
+		const filtered = history.filter((item) => {
+			return item !== name;
+		});
+
+		console.log(filtered);
+
+		setHistory(filtered);
 	};
 
 	useEffect(() => {
@@ -2849,6 +2867,8 @@ function App() {
 							proposalVisible={proposalVisible}
 							handleOpenOptions={handleOpenOptions}
 							handleCloseOptions={handleCloseOptions}
+							history={history}
+							clearHistory={clearHistory}
 						/>
 					</header>
 

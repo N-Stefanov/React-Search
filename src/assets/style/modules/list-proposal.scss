@@ -18,6 +18,7 @@
 
 	li {
 		cursor: pointer;
+		position: relative;
 	}
 
 	.list__button {
@@ -26,11 +27,31 @@
 		width: 100%;
 		background-color: transparent;
 		text-align: left;
-		padding: 1rem;
+		padding: 1rem 5rem 1rem 1rem;
 
 		&:focus {
 			background-color: rgba($color: #dddddd, $alpha: 1.0);
 		}
+	}
+
+	.list__button-close {
+		display: none;
+		position: absolute;
+		right: 1rem;
+		top: 50%;
+		height: 100%;
+		border: 0;
+		background-color: transparent;
+		transform: translateY(-50%);
+
+		img + img {
+			margin-left: 1rem;
+		}
+	}
+
+	.is-visible .list__button-close{
+		display: block;
+
 	}
 }
 

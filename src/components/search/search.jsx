@@ -9,6 +9,8 @@ const Search = ({
 	proposalVisible,
 	handleOpenOptions,
 	handleCloseOptions,
+	history,
+	clearHistory,
 }) => {
 	const handleOnChange = (event) => {
 		handleSearch(event.target.value);
@@ -65,6 +67,8 @@ const Search = ({
 				handleSearch={handleSearch}
 				handleSetTerm={handleSetTerm}
 				handleCloseOptions={handleCloseOptions}
+				history={history}
+				clearHistory={clearHistory}
 			/>
 		</div>
 	);

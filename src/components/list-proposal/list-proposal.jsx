@@ -1,5 +1,7 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
+import xmarkSolid from "../../assets/images/xmark-solid.svg";
+import clockSolid from "../../assets/images/clock-solid.svg";
 
 const ListProposal = ({
 	list,
@@ -8,16 +10,29 @@ const ListProposal = ({
 	handleSearch,
 	handleCloseOptions,
 	handleSetTerm,
+	history,
+	clearHistory,
 }) => {
 	const initialState = { selectedIndex: 0 };
 
 	const filteredData = () => {
 		return list
-			.filter(
-				({ model }) =>
-					model.toLowerCase().indexOf(term.toLowerCase()) > -1
+			.filter(({ model }) =>
+				model.toLowerCase().startsWith(term.toLowerCase())
 			)
 			.slice(0, 10);
+	};
+
+	const checkHistory = () => {
+		const newData = filteredData().map((item) => {
+			if (history.length && history.includes(item.model)) {
+				return { ...item, isWanted: true };
+			} else {
+				return { ...item, isWanted: false };
+			}
+		});
+
+		return newData;
 	};
 
 	const reducer = (state, action) => {
@@ -65,7 +80,9 @@ const ListProposal = ({
 		if (listOfButtons.classList.contains("list-proposal--is-open")) {
 			const buttons = listOfButtons.querySelectorAll("button");
 
-			buttons[index].focus();
+			if (index > -1) {
+				buttons[index].focus();
+			}
 		}
 	};
 
@@ -92,22 +109,26 @@ const ListProposal = ({
 
 	return (
 		<ul className={className}>
-			{filteredData().map((item, index) => {
+			{checkHistory().map((item, index) => {
+				const { model, isWanted } = item;
+				const elementClassName = isWanted
+					? "list__item is-visible"
+					: "list__item";
 				return (
 					<li
 						key={index}
-						onClick={() => handleOnClick(item.model)}
-						className="list__item"
+						onClick={() => handleOnClick(model)}
+						className={elementClassName}
 					>
 						<button
-							onClick={() => handleOnClick(item.model, index)}
+							onClick={() => handleOnClick(model, index)}
 							className="list__button"
 							role="button"
 							aria-pressed={index === state.selectedIndex}
 							tabIndex={0}
 							onKeyDown={(e) => {
 								if (e.key === "Enter") {
-									handleOnClick(item.model, index);
+									handleOnClick(model, index);
 									e.target.blur();
 								}
 
@@ -121,7 +142,26 @@ const ListProposal = ({
 								}
 							}}
 						>
-							{item.model}
+							{model}
+						</button>
+
+						<button
+							className="list__button-close"
+							onClick={() => clearHistory(model)}
+						>
+							<img
+								src={clockSolid}
+								alt=""
+								width={10}
+								height={10}
+							/>
+
+							<img
+								src={xmarkSolid}
+								alt=""
+								width={10}
+								height={10}
+							/>
 						</button>
 					</li>
 				);
