@@ -5,7 +5,7 @@ const Search = ({
 	data,
 	handleSearch,
 	term,
-	onSubmite,
+	handleSetTerm,
 	proposalVisible,
 	handleOpenOptions,
 	handleCloseOptions,
@@ -17,9 +17,13 @@ const Search = ({
 
 	const handleOnSubmite = (event) => {
 		event.preventDefault();
-		onSubmite(term);
+		handleSetTerm(term);
 		handleCloseOptions();
 	};
+
+	const className = proposalVisible
+		? "search__controls search__controls--is-open"
+		: "search__controls";
 
 	return (
 		<div className="search">
@@ -29,8 +33,9 @@ const Search = ({
 				action="?"
 				method="get"
 				onSubmit={(event) => handleOnSubmite(event)}
+				autoComplete="off"
 			>
-				<div className="search__controls">
+				<div className={className}>
 					<img
 						src={IcoSearch}
 						alt="Check"
@@ -48,6 +53,7 @@ const Search = ({
 						value={term}
 						onChange={(event) => handleOnChange(event)}
 						onClick={handleOpenOptions}
+						autoFocus
 					/>
 				</div>
 			</form>
@@ -56,6 +62,9 @@ const Search = ({
 				list={data}
 				term={term}
 				proposalVisible={proposalVisible}
+				handleSearch={handleSearch}
+				handleSetTerm={handleSetTerm}
+				handleCloseOptions={handleCloseOptions}
 			/>
 		</div>
 	);

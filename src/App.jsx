@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Search from "./components/search/search";
 import Articles from "./components/articles/articles";
@@ -2791,7 +2791,7 @@ function App() {
 		setTerm(searchValue);
 	};
 
-	const onSubmite = (term) => {
+	const handleSetTerm = (term) => {
 		if (term.length === 0) {
 			setArticlesData([]);
 
@@ -2819,6 +2819,23 @@ function App() {
 		setProposalVisible(false);
 	};
 
+	useEffect(() => {
+		const handleClick = (event) => {
+			if (
+				!event.target.classList.contains("list__button") ||
+				!event.target.classList.contains("search__controls")
+			) {
+				handleCloseOptions();
+			}
+		};
+
+		document.addEventListener("click", handleClick, true);
+
+		return () => {
+			document.removeEventListener("click", handleClick, true);
+		};
+	}, []);
+
 	return (
 		<div className="App">
 			<section className="section">
@@ -2828,7 +2845,7 @@ function App() {
 							data={options}
 							handleSearch={handleSearch}
 							term={term}
-							onSubmite={onSubmite}
+							handleSetTerm={handleSetTerm}
 							proposalVisible={proposalVisible}
 							handleOpenOptions={handleOpenOptions}
 							handleCloseOptions={handleCloseOptions}

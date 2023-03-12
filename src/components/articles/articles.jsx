@@ -1,6 +1,10 @@
 const Articles = ({ data }) => {
+	const resultsNumber = data.length;
+
 	return (
 		<div className="articles">
+			<p>About {resultsNumber} results</p>
+
 			{data.map((item, index) => {
 				const { model, year, vin, make } = item;
 				return (
@@ -9,13 +13,13 @@ const Articles = ({ data }) => {
 							<a href="#">{model}</a>
 						</h6>
 
-						<p>
-							{year}
+						<ul>
+							<li>Year {year}</li>
 
-							{vin}
+							<li>Vin {vin} </li>
 
-							{make}
-						</p>
+							<li>Make {make} </li>
+						</ul>
 					</div>
 				);
 			})}

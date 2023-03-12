@@ -1,17 +1,25 @@
 .search {
-	width: 561px;
 	position: relative;
+	width: 561px;
+	margin-bottom: 3rem;
 
 	.search__field {
 		width: 100%;
 		height: 4.4rem;
 		padding: 0 5rem;
-		border: .2rem solid #111;
-		border-radius: 22px;
+		border: none;
+		border-radius: 24px;
 	}
-
+	
 	.search__controls {
 		position: relative;
+		border-radius: 24px;
+		box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+
+		&.search__controls--is-open {
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius: 0;
+		}
 	}
 
 	.search__ico {
